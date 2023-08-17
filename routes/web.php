@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RegisterController::class, 'create'])->name('user.create');
 Route::post('/', [RegisterController::class, 'store'])->name('user.store');
+Route::get('/send-otp', [RegisterController::class, 'sendOtp'])->name('send-otp');

@@ -18,35 +18,35 @@
         <!-- Styles -->
     </head>
     <body>
-        <div class="container">
+        <div class="container mt-5">
             <x-alert />
             <h1>Register</h1>
             <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="gy-4">
-                    <div class="form-group">
+                <div>
+                    <div class="form-group my-3">
                         <label for="exampleInputPassword1">Name</label>
                         <input type="text" class="form-control" id="exampleInputPassword1" name="name" value="{{ old('name') }}" placeholder="Password">
                         @error('name')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="text-danger" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group my-3">
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-
                         @error('email')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="text-danger" role="alert">
                                 <strong>{{ $message }}</strong>
-                            </span>
+                            </span> <br>
                         @enderror
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{ route('send-otp') }}" class="btn btn-success">Send OTP</a>
                 </div>
             </form>
         </div>

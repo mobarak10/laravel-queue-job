@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendMailJob;
+use App\Jobs\SendOtpJob;
 use App\Mail\RegistrationSuccessMail;
 use App\Mail\UserReportMail;
 use Illuminate\Http\Request;
@@ -26,8 +27,17 @@ class RegisterController extends Controller
 
         DB::table('users')->insert($request->except('_token'));
 
-        dispatch(new SendMailJob((object) $request->all()));
+        for ($i = 0; $i < 50; $i++) {
+            dispatch(new SendMailJob((object) $request->all()));
+        }
 
         return redirect()->back()->with('success', 'Registration successfully!');
+    }
+
+    public function sendOtp()
+    {
+        dispatch(new SendOtpJob())->onQueue('high');
+
+        return redirect()->back()->with('success', 'OTP send please check your mail !');
     }
 }
