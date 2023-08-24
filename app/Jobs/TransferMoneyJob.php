@@ -30,18 +30,19 @@ class TransferMoneyJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if ($this->amount > 100) {
-            throw new \Exception('Money transfer fail');
+        if ($this->amount > 100 && $this->attempts() < 3) {
+            throw new \Exception("BDT {$this->amount} Money transfer fail");
         }
-        echo "BDT {$this->amount} is transfer successfully. \n";
+        echo "BDT {$this->amount} is transfer successfully. Attempts: {$this->attempts()}   ";
     }
 
     public function failed($exception = null)
     {
-        Mail::send([], [], function ($msg) {
-            $msg->to('admin@gmail.com')
-                ->subject("Money Transfer Failed")
-                ->html("Hi, Your money transfer failed");
-        });
+        echo "BDT {$this->amount}, Attempts: {$this->attempts()}";
+//        Mail::send([], [], function ($msg) {
+//            $msg->to('admin@gmail.com')
+//                ->subject("Money Transfer Failed")
+//                ->html("Hi, Your money transfer failed");
+//        });
     }
 }
