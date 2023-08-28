@@ -13,12 +13,15 @@ class SendOtpMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $jobId;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($jobId)
     {
         //
+        $this->jobId = $jobId;
     }
 
     /**
